@@ -11,11 +11,11 @@ class ParentsController < ApplicationController
       last_burst = child.bursts.last
       burst_rate = last_burst.present? ? calc_burst_rate(last_burst) : 0
 
-      [
+      {
         id: child.id,
         name: child.name,
         burst_rate: burst_rate
-      ]
+      }
     }
 
     render json: children
