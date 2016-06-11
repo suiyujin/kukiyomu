@@ -8,6 +8,8 @@ class ChildrenController < ApplicationController
     child_id = Child.where(device_token: params['device_token']).first.id
     Burst.create({child_id: child_id})
 
+    update_calm_time(child_id)
+
     devise_token = 'ba48b1ac7b5d1fbbd9ed2a182e31af156ff52c293d8af2a73629eea3d9fa942b'
 
     APNS.host = 'gateway.sandbox.push.apple.com'
@@ -88,5 +90,31 @@ class ChildrenController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def child_params
       params.require(:child).permit(:name, :parent_id)
+    end
+
+    def update_calm_time child_id
+      calm_time_rates = [
+        2.5, 2.5, 2.5, 2.5, 3,   3.5,
+        3.2, 3,   2.8, 2.5, 2.2, 2.4,
+        2.2, 2.3, 2.5, 2.2, 2.2, 2.2,
+        2.2, 2.4, 2.4, 2.6, 2.8, 2.7
+      ]
+
+      Burst.where(child_id: child_id).each do |burst|
+        calm_time_rates[burst.created_at.hour - 1] -= 0.1
+      end
+
+      calm_time = 6
+      max_calm_time_rate = 0
+
+      calm_time_rates.each_with_index do |rate, index|
+        if rate > max_calm_time_rate then
+          calm_time = index + 1
+          max_calm_time_rate = rate
+        end
+      end
+
+      child = Child.where(id: child_id).limit(1).first
+      child.update(calm_time: "#{calm_time}:00")
     end
 end
