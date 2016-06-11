@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :children
   resources :parents
-  # The priority is based upon order of creation: first created -> highest priority.
+  get 'parents/:parent_id/children' => 'parents#children'
+
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
