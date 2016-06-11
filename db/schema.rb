@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611083025) do
+ActiveRecord::Schema.define(version: 20160611083225) do
 
   create_table "children", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -27,5 +27,15 @@ ActiveRecord::Schema.define(version: 20160611083025) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "worries", force: :cascade do |t|
+    t.boolean  "notificationed",           default: false, null: false
+    t.integer  "parent_id",      limit: 4,                 null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
+  add_index "worries", ["parent_id"], name: "index_worries_on_parent_id", using: :btree
+
   add_foreign_key "children", "parents"
+  add_foreign_key "worries", "parents"
 end
