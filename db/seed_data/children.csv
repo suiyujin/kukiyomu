@@ -1,4 +1,4 @@
-name,parent_id
-'息子',1
-'花子',1
-'違う人',2
+name,parent_id,devise_token
+祐,1,<ba48b1ac 7b5d1fbb d9ed2a18 2e31af15 6ff52c29 3d8af2a7 3629eea3 d9fa942b>`
+修平,1,<tmp>
+違う人,2,<tekito>
