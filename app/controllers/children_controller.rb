@@ -2,6 +2,14 @@ class ChildrenController < ApplicationController
   before_action :set_child, only: [:show, :edit, :update, :destroy]
 
   # GET /children
+
+  # POST /children/1/burst
+  def burst
+    render json: {
+      massage: 'ok',
+    }, status: :ok
+  end
+
   # GET /children.json
   def index
     @children = Child.all

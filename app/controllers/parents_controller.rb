@@ -18,6 +18,13 @@ class ParentsController < ApplicationController
     render json: children
   end
 
+  # POST /parents/1/worry
+  def worry
+    render json: {
+      massage: 'ok',
+    }, status: :ok
+  end
+
   # GET /parents.json
   def index
     @parents = Parent.all
