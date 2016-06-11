@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611083329) do
+ActiveRecord::Schema.define(version: 20160611084457) do
 
   create_table "bursts", force: :cascade do |t|
     t.integer  "child_id",   limit: 4, null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20160611083329) do
     t.integer  "parent_id",  limit: 4,   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.time     "calm_time"
   end
 
   add_index "children", ["parent_id"], name: "index_children_on_parent_id", using: :btree
