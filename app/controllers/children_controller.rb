@@ -5,20 +5,20 @@ class ChildrenController < ApplicationController
 
   # POST /children/burst
   def burst
-    child_id = Child.where(device_token: params['device_token']).first.id
-    Burst.create({child_id: child_id})
+    child = Child.where(device_token: params['device_token']).first
+    Burst.create({child_id: child.id})
 
-    update_calm_time(child_id)
+    update_calm_time(child)
 
     devise_token = 'ba48b1ac7b5d1fbbd9ed2a182e31af156ff52c293d8af2a73629eea3d9fa942b'
 
     APNS.host = 'gateway.sandbox.push.apple.com'
     APNS.pem = Rails.root.join('config/dev_push.pem')
     APNS.port = 2195
-    APNS.send_notification(devise_token, alert: alert, badge: 1, sound: 'default', other: {child_id: child_id})
+    APNS.send_notification(devise_token, alert: "#{child.name}さんが怒りました", badge: 1, sound: 'default', other: {child_id: child.id})
 
     render json: {
-      user_id: child_id
+      user_id: child.id
     }, status: :ok
   end
 
@@ -92,7 +92,7 @@ class ChildrenController < ApplicationController
       params.require(:child).permit(:name, :parent_id)
     end
 
-    def update_calm_time child_id
+    def update_calm_time child
       calm_time_rates = [
         2.5, 2.5, 2.5, 2.5, 3,   3.5,
         3.2, 3,   2.8, 2.5, 2.2, 2.4,
@@ -100,7 +100,7 @@ class ChildrenController < ApplicationController
         2.2, 2.4, 2.4, 2.6, 2.8, 2.7
       ]
 
-      Burst.where(child_id: child_id).each do |burst|
+      Burst.where(child_id: child.id).each do |burst|
         calm_time_rates[burst.created_at.hour - 1] -= 0.1
       end
 
@@ -114,7 +114,6 @@ class ChildrenController < ApplicationController
         end
       end
 
-      child = Child.where(id: child_id).limit(1).first
       child.update(calm_time: "#{calm_time}:00")
     end
 end
