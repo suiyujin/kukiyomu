@@ -23,6 +23,9 @@ class ParentsController < ApplicationController
 
   # POST /parents/1/worry
   def worry
+    Worry.create({parent_id: params['parent_id'], child_id: params['child_id']})
+    p Worry.all()
+
     render json: {
       massage: 'ok',
     }, status: :ok

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611153743) do
+ActiveRecord::Schema.define(version: 20160611171753) do
 
   create_table "bursts", force: :cascade do |t|
     t.integer  "child_id",   limit: 4, null: false
@@ -42,8 +42,10 @@ ActiveRecord::Schema.define(version: 20160611153743) do
     t.integer  "parent_id",      limit: 4,                 null: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
+    t.integer  "child_id",       limit: 4,                 null: false
   end
 
+  add_index "worries", ["child_id"], name: "index_worries_on_child_id", using: :btree
   add_index "worries", ["parent_id"], name: "index_worries_on_parent_id", using: :btree
 
   add_foreign_key "bursts", "children"
