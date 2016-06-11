@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160611153743) do
     t.datetime "created_at",                                               null: false
     t.datetime "updated_at",                                               null: false
     t.time     "calm_time",                default: '2000-01-01 12:00:00', null: false
-    t.string   "devise_token", limit: 255,                                 null: false
+    t.string   "device_token", limit: 255,                                 null: false
   end
 
   add_index "children", ["parent_id"], name: "index_children_on_parent_id", using: :btree

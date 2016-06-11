@@ -3,10 +3,13 @@ class ChildrenController < ApplicationController
 
   # GET /children
 
-  # POST /children/1/burst
+  # POST /children/burst
   def burst
+    child_id = Child.where(device_token: params['device_token']).first.id
+    Burst.create({child_id: child_id})
+
     render json: {
-      massage: 'ok',
+      user_id: child_id
     }, status: :ok
   end
 
