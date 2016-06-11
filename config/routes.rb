@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   post 'parents/:parent_id/worry' => 'parents#worry'
   post 'children/burst' => 'children#burst'
 
+  post 'linebot/callback' => 'children#line_callback'
+
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"

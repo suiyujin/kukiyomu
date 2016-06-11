@@ -81,6 +81,11 @@ class ChildrenController < ApplicationController
     end
   end
 
+  def line_callback
+    logger.debug('callback!!!')
+    render text: 'callback!'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_child
