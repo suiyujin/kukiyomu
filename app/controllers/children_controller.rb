@@ -8,6 +8,13 @@ class ChildrenController < ApplicationController
     child_id = Child.where(device_token: params['device_token']).first.id
     Burst.create({child_id: child_id})
 
+    devise_token = 'ba48b1ac7b5d1fbbd9ed2a182e31af156ff52c293d8af2a73629eea3d9fa942b'
+
+    APNS.host = 'gateway.sandbox.push.apple.com'
+    APNS.pem = Rails.root.join('config/dev_push.pem')
+    APNS.port = 2195
+    APNS.send_notification(devise_token, alert: alert, badge: 1, sound: 'default', other: {child_id: child_id})
+
     render json: {
       user_id: child_id
     }, status: :ok
