@@ -7,11 +7,14 @@ class ParentsController < ApplicationController
   def children
     parent_id = params['parent_id']
 
-    children = Child.where(parent_id: parent_id).map{ |child|
+    children = Child.includes(:bursts).where(parent_id: parent_id).map{ |child|
+      last_burst = child.bursts.last
+      burst_rate = last_burst.present? ? calc_burst_rate(last_burst) : 0
+
       [
         id: child.id,
         name: child.name,
-        burst_rate: 50
+        burst_rate: burst_rate
       ]
     }
 
@@ -93,5 +96,14 @@ class ParentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def parent_params
       params.fetch(:parent, {})
+    end
+
+    def calc_burst_rate burst
+      burst_rates = [100, 60, 40, 20, 150, 10, 10, 10, 10]
+      term = ((Time.now - burst.created_at) / 60 / 15).to_i
+      minute = ((Time.now - burst.created_at) / 60 % 15).to_i
+      p minute
+      term = 7 if term > 7
+      burst_rates[term + 1] + (burst_rates[term] - burst_rates[term + 1]) * (15 - minute) / 15
     end
 end
