@@ -2,6 +2,22 @@ class ParentsController < ApplicationController
   before_action :set_parent, only: [:show, :edit, :update, :destroy]
 
   # GET /parents
+
+  # GET /parents/1/children
+  def children
+    parent_id = params['parent_id']
+
+    children = Child.where(parent_id: parent_id).map{ |child|
+      [
+        id: child.id,
+        name: child.name,
+        burst_rate: 50
+      ]
+    }
+
+    render json: children
+  end
+
   # GET /parents.json
   def index
     @parents = Parent.all

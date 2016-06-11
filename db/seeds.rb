@@ -6,6 +6,8 @@ end
 
 # parents
 Parent.create()
+Parent.create()
+Parent.create()
 p 'parents inserted.'
 
 # children
