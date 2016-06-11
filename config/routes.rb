@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :parents
   get 'parents/:parent_id/children' => 'parents#children'
   post 'parents/:parent_id/worry' => 'parents#worry'
-  post 'children/:child_id/burst' => 'children#burst'
+  post 'children/burst' => 'children#burst'
 
   # See how all your routes lay out with "rake routes".
 
