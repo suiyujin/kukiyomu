@@ -33,7 +33,7 @@ class LineBot
     client.use_ssl = true
 
     body = {
-      to: %w(ENV.fetch('SUIYUJIN_MID') ENV.fetch('SESTA_MID'), ENV.fetch('KADOWAKI_MID')),
+      to: [ENV.fetch('SUIYUJIN_MID'), ENV.fetch('SESTA_MID'), ENV.fetch('KADOWAKI_MID')],
       toChannel: 1383378250,
       eventType: "138311608800106203",
       content: {
