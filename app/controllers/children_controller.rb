@@ -10,7 +10,7 @@ class ChildrenController < ApplicationController
 
     update_calm_time(child)
 
-    devise_token = 'ba48b1ac7b5d1fbbd9ed2a182e31af156ff52c293d8af2a73629eea3d9fa942b'
+    devise_token = '1404d2fa0a97fef23386fc897af55b576a7a8b5594623a82e05dc65d12d86e76'
 
     APNS.host = 'gateway.sandbox.push.apple.com'
     APNS.pem = Rails.root.join('config/dev_push.pem')
