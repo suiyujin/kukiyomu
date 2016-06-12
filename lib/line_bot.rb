@@ -10,7 +10,7 @@ class LineBot
     message = '心配してたよ'
 
     body = {
-      to: %w(ENV.fetch('SUIYUJIN_MID') ENV.fetch('SESTA_MID'), ENV.fetch('KADOWAKI_MID')),
+      to: [ENV.fetch('SUIYUJIN_MID'), ENV.fetch('SESTA_MID'), ENV.fetch('KADOWAKI_MID')],
       toChannel: 1383378250,
       eventType: "138311608800106203",
       content: { contentType: 1, toType: 1, text: message }
