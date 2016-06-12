@@ -17,7 +17,7 @@ class LineBot
     }
 
     header = {
-      'Content-Type' => 'application/json; charser=UTF-8',
+      'Content-Type' => 'application/json; charset=UTF-8',
       'X-Line-ChannelID' => ENV.fetch('CHANNEL_ID'),
       'X-Line-ChannelSecret' => ENV.fetch('CHANNEL_SECRET'),
       'X-Line-Trusted-User-With-ACL' => ENV.fetch('CHANNEL_MID')
