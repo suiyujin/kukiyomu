@@ -103,10 +103,14 @@ class ParentsController < ApplicationController
 
     def calc_burst_rate burst
       burst_rates = [100, 60, 40, 20, 150, 10, 10, 10, 10]
-      term = ((Time.now - burst.created_at) / 60 / 15).to_i
-      minute = ((Time.now - burst.created_at) / 60 % 15).to_i
+      # 実際にサービスとして動かす時はこっち
+      # term = ((Time.now - burst.created_at) / 60 / 15).to_i
+      # minute = ((Time.now - burst.created_at) / 60 % 15).to_i
+      term = ((Time.now - burst.created_at) / 60).to_i
+      minute = ((Time.now - burst.created_at) % 60).to_i
       p minute
       term = 7 if term > 7
-      burst_rates[term + 1] + (burst_rates[term] - burst_rates[term + 1]) * (15 - minute) / 15
+      burst_rate = burst_rates[term + 1] + (burst_rates[term] - burst_rates[term + 1]) * (60 - minute) / 60
+      burst_rate > 100 ? 100 : burst_rate
     end
 end
